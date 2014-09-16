@@ -17,7 +17,7 @@ desks_schema = {
             }
         }
     },
-    'incoming_basket': BaseModel.rel('content_view', True)
+    'incoming_stage': BaseModel.rel('content_view', True)
 }
 
 

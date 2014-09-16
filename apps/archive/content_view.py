@@ -43,7 +43,7 @@ class ContentViewModel(BaseModel):
             'schema': {
                 'type': 'dict',
                 'schema': {
-                    'basket': BaseModel.rel(endpoint_name, True)
+                    'stage': BaseModel.rel(endpoint_name, True)
                 }
             }
         },
