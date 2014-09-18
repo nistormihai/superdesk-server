@@ -1,5 +1,6 @@
 from superdesk.models import BaseModel
 from bson.objectid import ObjectId
+from flask import current_app as app
 
 
 desks_schema = {
@@ -7,6 +8,9 @@ desks_schema = {
         'type': 'string',
         'unique': True,
         'required': True,
+    },
+    'description': {
+        'type': 'string'
     },
     'members': {
         'type': 'list',
@@ -17,7 +21,7 @@ desks_schema = {
             }
         }
     },
-    'incoming_stage': BaseModel.rel('content_view', True)
+    'incoming_stage': BaseModel.rel('stages', True)
 }
 
 
@@ -30,6 +34,16 @@ class DesksModel(BaseModel):
     endpoint_name = 'desks'
     schema = desks_schema
     datasource = {'default_sort': [('created', -1)]}
+
+    def create(self, docs, **kwargs):
+        for doc in docs:
+            if not doc.get('incoming_stage', None):
+                stage = {'name': 'Incoming'}
+                app.data.insert('stages', [stage])
+                doc['incoming_stage'] = stage.get('_id')
+            super().create(docs, **kwargs)
+            app.data.update('stages', doc['incoming_stage'], {'desk': doc['_id']})
+        return [doc['_id'] for doc in docs]
 
 
 class UserDesksModel(BaseModel):

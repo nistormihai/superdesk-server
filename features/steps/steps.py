@@ -812,7 +812,7 @@ def when_we_get_user_resource(context, resource):
 
 
 @then('we get embedded items')
-def step_impl(context):
+def we_get_embedded_items(context):
     response_data = json.loads(context.response.get_data())
     href = get_self_href(response_data, context)
     url = href + '/?embedded={"items": 1}'
@@ -829,3 +829,13 @@ def then_we_get_notifications(context):
     context_data = json.loads(apply_placeholders(context, context.text))
     assert_equal(json_match(context_data, notifications_data), True,
                  msg=str(context_data) + '\n != \n' + str(notifications_data))
+
+
+@then('we get the default incoming stage')
+def we_get_default_incoming_stage(context):
+    data = json.loads(context.response.get_data())
+    incoming_stage = data['_items'][0]['incoming_stage']
+    assert incoming_stage
+    url = 'stages/{0}'.format(incoming_stage)
+    when_we_get_url(context, url)
+    assert_200(context.response)

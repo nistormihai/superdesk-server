@@ -23,6 +23,7 @@ Feature: Desks
             """
             {"_items": [{"name": "Sports Desk", "members": [{"user": "#USERS_ID#"}]}]}
             """
+        Then we get the default incoming stage
 
 	@auth
 	Scenario: Update desk
