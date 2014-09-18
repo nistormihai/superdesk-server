@@ -1,10 +1,12 @@
 import logging
-
-
 from superdesk.models import BaseModel
 
 
 logger = logging.getLogger(__name__)
+
+
+def init_app(app):
+    StagesModel(app=app)
 
 
 class StagesModel(BaseModel):
@@ -19,7 +21,7 @@ class StagesModel(BaseModel):
             'type': 'string',
             'minlength': 1
         },
-        'desk': BaseModel.rel('desks', required=True, embeddable=True),
+        'desk': BaseModel.rel('desks', embeddable=True),
         'outgoing': {
             'type': 'list',
             'schema': {
