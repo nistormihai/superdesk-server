@@ -8,6 +8,9 @@ desks_schema = {
         'unique': True,
         'required': True,
     },
+    'description': {
+        'type': 'string',
+    },
     'members': {
         'type': 'list',
         'schema': {
@@ -17,7 +20,7 @@ desks_schema = {
             }
         }
     },
-    'incoming_stage': BaseModel.rel('content_view', True)
+    'incoming_stage': BaseModel.rel('stages', True)
 }
 
 

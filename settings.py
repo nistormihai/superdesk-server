@@ -68,6 +68,7 @@ INSTALLED_APPS = (
     'superdesk.io.afp',
 
     'apps.archive',
+    'apps.stages',
     'apps.activity',
     'apps.desks',
     'apps.planning',
